@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Texto com Iniciais Personalizadas - Tem Base?</title>
+    <style>
+        body {
+            background-color: #f4e9cd;
+            font-family: 'Georgia', serif;
+            color: #8a5a44;
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .column {
+            width: 48%; /* Adjusted for equal spacing */
+            display: flex;
+            flex-direction: column;
+        }
+        textarea, input[type="text"] {
+            padding: 15px;
+            border: 2px solid #d3c1a5;
+            background-color: #fbf7ef;
+            font-family: 'Georgia', serif;
+            font-size: 18px;
+            border-radius: 8px;
+            box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+        }
+        textarea {
+            height: 200px; /* Height increased for text */
+            resize: vertical; /* Allows vertical resizing */
+        }
+        input[type="text"], textarea {
+            width: 100%; /* Full width within column */
+        }
+        button {
+            padding: 12px 24px;
+            background-color: #baa892;
+            color: white;
+            border: none;
+            font-family: 'Georgia', serif;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #a58e7a;
+        }
+        label {
+            font-size: 18px;
+            color: #6e553f;
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+        h1 {
+            color: #6e553f;
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%; /* Full width for alignment */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="column">
+        <h1>Entrada  SEI>>> </h1>
+        <label for="initials">Iniciais da Publicação</label>
+        <input type="text" id="initials" placeholder="Entre com as iniciais">
+        <label for="inputText">Entre com seu Texto</label>
+        <textarea id="inputText" placeholder="Digite algo aqui..."></textarea>
+        <button onclick="processText()">FORMATAR PUBLICAÇÃO PARA O DOPM</button>
+    </div>
+    <div class="column">
+        <h1>Saída SICAD>> </h1>
+        <label for="textoElogio">Texto de Elogio</label>
+        <textarea id="textoElogio" readonly></textarea>
+        <label for="rgs">RGS</label>
+        <input type="text" id="rgs" readonly>
+        <label for="autoridade">Autoridade</label>
+        <input type="text" id="autoridade" readonly>
+    </div>
+
+    <script>
+        function processText() {
+            let text = document.getElementById('inputText').value;
+            let customInitials = document.getElementById('initials').value.trim();
+            let lines = text.split(/\r?\n/).filter(line => line.trim() !== '');
+            let startIndex = lines.findIndex(line => line.includes("ITEM DOPM"));
+            let rgs = [];
+
+            // Extract numbers from text before "ITEM DOPM"
+            if (startIndex !== -1) {
+                let textBeforeItemDOPM = lines.slice(0, startIndex).join(' ');
+                let rgMatches = textBeforeItemDOPM.match(/(\b\d{2}[.,]\d{3}\b)|(\b\d{5}\b)/g);
+                if (rgMatches) {
+                    rgs = rgMatches.map(rg => rg.replace(/[.,]/g, '')).filter(rg => rg.length === 5);
+                }
+            }
+
+            // Process text after "ITEM DOPM"
+            let processedText = '';
+            if (startIndex !== -1) {
+                lines = lines.slice(startIndex + 1); // Remove "ITEM DOPM" and everything before it
+                processedText = lines.join(' ');
+            }
+
+            // Extract authority by looking for "Comandante" or "Chefe"
+            let authority = '';
+            for (let i = lines.length - 1; i >= 0; i--) {
+                if (/^(Comandante|Chefe)/i.test(lines[i])) {
+                    if (i > 0) {
+                        authority = lines[i - 1];
+                    }
+                    break;
+                }
+            }
+
+            // Add initials
+            processedText += ' ' + customInitials;
+
+            // Update the displayed results
+            document.getElementById('textoElogio').value = processedText.trim();
+            document.getElementById('rgs').value = rgs.join(', ');
+            document.getElementById('autoridade').value = authority;
+        }
+    </script>
+</body>
+</html>
