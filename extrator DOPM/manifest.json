@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": Extrator DOPM 1.1",
+  "version": "1.0",
+  "description": "Extensão que captura o texto renderizado da aba ativa e exibe em um textarea.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
