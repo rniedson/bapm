@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Capturador de Texto</title>
+  <style>
+body {
+  width: 700px;
+  height:700px;
+  background-color: #ccc;
+}
+
+#capturedText {
+    height:180px;	
+}
+
+#rgs {
+    height:70px;
+
+}
+
+
+/* Estilização geral para inputs de formulário */
+input[type="text"], input[type="email"], input[type="password"], select, textarea {
+    width: 95%;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid #D1D5DB; /* Cinza claro */
+    font-size: 12px;
+    color: #111827; /* Cinza escuro */
+    background-color: #F9FAFB; /* Fundo claro */
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Efeito ao focar nos campos de entrada */
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #3B82F6; /* Azul de foco */
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2); /* Suave efeito ao redor */
+}
+
+/* Estilização dos labels */
+label {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #374151; /* Cinza médio */
+}
+
+/* Botão de envio */
+button[type="submit"] {
+    width: 95%;
+    padding: 12px 16px;
+    background-color: #3B82F6; /* Azul */
+    color: #FFFFFF; /* Texto branco */
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Hover e foco no botão */
+button[type="submit"]:hover, button[type="submit"]:focus {
+    background-color: #2563EB; /* Azul mais escuro */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+/* Espaçamento entre os campos */
+form > div {
+    margin-bottom: 16px;
+}
+
+/* Estilização de checkboxes */
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 1px solid #D1D5DB; /* Cinza claro */
+    background-color: #FFFFFF; /* Fundo branco */
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+/* Label de checkbox */
+label[for="termos"] {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151; /* Cinza médio */
+}
+
+/* Hover no checkbox */
+input[type="checkbox"]:hover {
+    border-color: #3B82F6; /* Azul no hover */
+}
+
+/* Feedback de erro para inputs */
+input.error, select.error, textarea.error {
+    border-color: #EF4444; /* Vermelho para erro */
+    background-color: #FEE2E2; /* Fundo vermelho claro */
+}
+
+input.error:focus, select.error:focus, textarea.error:focus {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2); /* Foco em erro */
+}
+
+/* Texto de erro */
+.error-message {
+    color: #EF4444; /* Vermelho para mensagem de erro */
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+/* Ajuste para selects */
+select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cGF0aCBmaWxsPSIjNzM3MzczIiBkPSJNMTIuMDAyIDguNTg3bC00LjU5MSA0LjU5Yy0uMzkyLjM5Mi0xLjAyLjM5Mi0xLjQxNSAwLS4zOTItLjM5Mi0uMzkyLTEuMDIuMDAyLTEuNDE0bDUuMjk5LTUuMkMuNzc3IDguNjg3IDEuMTMzIDggMiwgOHYxMGgyVjhoMjB2MTBINnYtMmgxMlY4aC01LjEwM3oiLz48L3N2Zz4=');
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 12px;
+}
+
+/* Remove aparência padrão do botão de enviar */
+button[type="submit"] {
+    appearance: none;
+}
+
+  </style>
+</head>
+<body>
+  <h2>Extrator DOPM | SEI>SICAD</h2>
+  <button id="captureButton">Capturar</button>
+  <button id="fillButton">Preencher</button>
+  <button id="clearButton">Limpar</button>
+
+  <!-- Textarea para exibir e editar o texto capturado e processado -->
+  <h3>Texto Processado</h3>
+  <textarea id="capturedText"></textarea>
+
+  <!-- Input para exibir e editar o nome da autoridade -->
+  <h3>Nome da Autoridade</h3>
+  <input type="text" id="autoridade" />
+
+  <!-- Textarea para exibir e editar os RGs capturados -->
+  <h3>RGs Capturados</h3>
+  <textarea id="rgs"></textarea>
+
+  <script src="popup.js"></script>
+</body>
+</html>
